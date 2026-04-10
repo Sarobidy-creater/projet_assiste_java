@@ -33,10 +33,4 @@ public class Personne {
     public String getContact() {
         return Contact;
     };
-
-    public static void main(String[] args){
-        Personne clemence = new Personne(111, "clemence", "2 rue billancourt", "0762752498");
-        System.out.println(clemence.obtenirInfos());
-
-    };
 }
