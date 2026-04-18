@@ -1,3 +1,7 @@
+package fr.isep;
+
+import fr.isep.Aeroport;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,9 +56,8 @@ public class Vol {
     }
 
     public void planifierVol() {
-        System.out.println("Vol " + numeroVol + " planifié :" +
-               "\nDépart : " + origine.getNom() + " (" + dateHeureDepart + ")" +
-               "\nArrivée : " + destination.getNom() + " (" + dateHeureArrivee + ")");
+        System.out.println("Vol " + numeroVol + " planifie.");
+        afficherTableauVols();
     }
 
     public void annulerVol() {
@@ -70,14 +73,20 @@ public class Vol {
     }
 
     public void listingPassager() {
+        String line = "+----------------------------------------+------------------+";
+        System.out.println("\n" + line);
+        System.out.printf("| %-38s | %-16s |%n", "Passagers - Vol " + numeroVol, "Passeport");
+        System.out.println(line);
         if (passagers.isEmpty()) {
-            System.out.println("Aucun passager pour le vol " + numeroVol);
-            return;
+            System.out.printf("| %-38s | %-16s |%n", "Aucun passager enregistre", "");
+        } else {
+            for (Passager p : passagers) {
+                System.out.printf("| %-38s | %-16s |%n",
+                    truncate(p.getNom(), 38),
+                    truncate(p.getPasseport(), 16));
+            }
         }
-        System.out.println("=== Passagers du vol " + numeroVol + " ===");
-        for (Passager p : passagers) {
-            System.out.println("- " + p.getNom() + " | Passeport : " + p.getPasseport());
-        }
+        System.out.println(line);
     }
 
     public void ajouterPassager(Passager p) {
@@ -85,14 +94,44 @@ public class Vol {
     }
 
     public String obtenirInfosVol() {
-        return "=== Informations Vol ===" +
-               "\nNuméro de vol   : " + numeroVol +
-               "\nOrigine         : " + origine.getNom() + " (" + origine.getVille() + ")" +
-               "\nDestination     : " + destination.getNom() + " (" + destination.getVille() + ")" +
-               "\nDépart          : " + dateHeureDepart +
-               "\nArrivée         : " + dateHeureArrivee +
-               "\nÉtat            : " + etat +
-               "\nAvion           : " + avion.getModele() + " (" + avion.getImmatriculation() + ")";
+        String line = "+---------------------------+------------------------------+";
+        return line + "\n" +
+               String.format("| %-25s | %-28s |%n", "Numero de vol", numeroVol) +
+               String.format("| %-25s | %-28s |%n", "Origine", origine.getNom() + " - " + origine.getVille()) +
+               String.format("| %-25s | %-28s |%n", "Destination", destination.getNom() + " - " + destination.getVille()) +
+               String.format("| %-25s | %-28s |%n", "Depart", dateHeureDepart) +
+               String.format("| %-25s | %-28s |%n", "Arrivee", dateHeureArrivee) +
+               String.format("| %-25s | %-28s |%n", "Etat", etat) +
+               String.format("| %-25s | %-28s |%n", "Avion", avion.getModele() + " (" + avion.getImmatriculation() + ")") +
+               line;
+    }
+
+    public static void afficherTableauVols() {
+        String line = "+--------+--------------------------+--------------------------+---------------------+---------------------+---------------+";
+        System.out.println("\n" + line);
+        System.out.printf("| %-6s | %-24s | %-24s | %-19s | %-19s | %-13s |%n",
+            "Vol", "Origine", "Destination", "Depart", "Arrivee", "Etat");
+        System.out.println(line);
+        if (listeVols.isEmpty()) {
+            System.out.printf("| %-6s | %-24s | %-24s | %-19s | %-19s | %-13s |%n",
+                "-", "Aucun vol", "", "", "", "");
+        } else {
+            for (Vol v : listeVols) {
+                System.out.printf("| %-6s | %-24s | %-24s | %-19s | %-19s | %-13s |%n",
+                    truncate(v.numeroVol, 6),
+                    truncate(v.origine.getNom() + " " + v.origine.getVille(), 24),
+                    truncate(v.destination.getNom() + " " + v.destination.getVille(), 24),
+                    truncate(v.dateHeureDepart, 19),
+                    truncate(v.dateHeureArrivee, 19),
+                    truncate(v.etat, 13));
+            }
+        }
+        System.out.println(line);
+    }
+
+    private static String truncate(String s, int max) {
+        if (s == null) return "";
+        return s.length() <= max ? s : s.substring(0, max - 1) + "…";
     }
 
     // CRUD
