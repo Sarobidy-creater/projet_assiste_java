@@ -1,0 +1,7 @@
+NumeroReservation,DateReservation,Statut,Passager,Vol
+RES-001,2026-04-01,Confirme,Sara Rakoto,AF001
+RES-002,2026-04-02,En attente,Paul Rabe,AF002
+RES-003,2026-04-03,En attente,Hery Andria,AF003
+RES-004,2026-04-04,Annule,Lova Rasoa,AF004
+RES-005,2026-04-05,Confirme,Noro Raivo,AF001
+

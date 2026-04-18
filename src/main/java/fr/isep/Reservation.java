@@ -31,13 +31,13 @@ public class Reservation {
 
     // Méthodes du diagramme
     public void confirmerReservation() {
-        this.statut = "Confirmé";
+        this.statut = "Confirme";
         vol.ajouterPassager(passager);
-        System.out.println("Réservation " + numeroReservation + " confirmée pour " + passager.getNom());
+        System.out.println("Reservation " + numeroReservation + " confirmee pour " + passager.getNom());
     }
 
     public void annulerReservation() {
-        this.statut = "Annulé";
+        this.statut = "Annule";
         System.out.println("Réservation " + numeroReservation + " annulée pour " + passager.getNom());
     }
 
